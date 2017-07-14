@@ -1,0 +1,143 @@
+/* Custom Styles */
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+
+html {
+  height: 100%;
+}
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+}
+.cocoen-container {
+  width: 70%;
+  overflow: hidden;
+  position: relative;
+	margin: 0 auto;
+}
+.cocoen img {
+  -webkit-transition: transform .3s ease-out;
+  -moz-transition: transform .3s ease-out;
+  -o-transition: transform .3s ease-out;
+  transition: transform .3s ease-out;
+}
+.mouseDown {
+  cursor: move !important;
+}
+.cocoen-drag.dragging-left::before, .cocoen-drag.dragging-right::after {
+  opacity: 0;
+}
+
+/*
+The MIT License (MIT)
+Copyright (c) 2015 Koen Romers
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
+
+.cocoen {
+    font-family: 'Oswald', sans-serif;
+    box-sizing: border-box;
+    cursor: pointer;
+    line-height: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.cocoen * {
+    box-sizing: inherit;
+}
+
+.cocoen::after,
+.cocoen::before {
+    box-sizing: inherit;
+}
+
+.cocoen img,
+.cocoen picture>img {
+    max-width: none;
+}
+
+.cocoen>img,
+.cocoen>picture>img {
+    display: block;
+    width: 100%;
+}
+
+.cocoen>div:first-child,
+picture .cocoen>div {
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.cocoen-drag {
+    background: #fff;
+    color: #fff;
+    bottom: 0;
+    font-size: 1.8em;
+    cursor: ew-resize;
+    left: 50%;
+    margin-left: -1px;
+    position: absolute;
+    top: 0;
+    width: 5px;
+    z-index: 3;
+    -webkit-transition: opacity .2s ease-out;
+    -moz-transition: opacity .2s ease-out;
+    -o-transition: opacity .2s ease-out;
+    transition: opacity .2s ease-out;
+}
+
+.cocoen-drag::before {
+    content: 'BEFORE';
+    margin-left: -60px;
+    margin-top: -18px;
+    position: absolute;
+    top: 50%;
+    -ms-transform: rotate(-90deg); /* IE 9 */
+    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    transform: rotate(-90deg);
+}
+.cocoen-drag::after {
+    content: 'AFTER';
+    margin-left: -7px;
+    margin-top: -18px;
+    position: absolute;
+    top: 50%;s
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+}
+
+.cocoen-drag::before, .cocoen-drag::after {
+  -webkit-transition: opacity .2s ease-out;
+  -moz-transition: opacity .2s ease-out;
+  -o-transition: opacity .2s ease-out;
+  transition: opacity .2s ease-out;
+}
