@@ -1,2 +1,2 @@
 # contraster
-A before and after slider with zoom and pan functionality using Cocoen. *Currently in early development8
+A before and after slider with zoom and pan functionality using Cocoen. *Currently in early development
