@@ -1,13 +1,36 @@
+/*
+The MIT License (MIT)
+Copyright (c) 2017 Justin Toland
 
-var direction = "",
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
+
+var mouseDown = false,
+    direction = "",
 		oldx = 0,
+		target = null,
 		mouseDirection = function (event) {
 			if (event.pageX < oldx) {
-				$('.cocoen-drag')
+				$(target)
 					.addClass("dragging-left")
 					.removeClass("dragging-right");
 			} else if (event.pageX > oldx) {
-        $('.cocoen-drag')
+        $(target)
 					.addClass("dragging-right")
 					.removeClass("dragging-left");
 			}
@@ -18,9 +41,10 @@ $('.cocoen-container')
   .on('mousedown', function(event){
     switch (event.which) {
       case 1:
-        $('.cocoen-drag')
+        $(this).find('.cocoen-drag')
           .css('opacity', '0.6');
         if($(event.target).hasClass('cocoen-drag')){
+					target = event.target;
           document.addEventListener('mousemove', mouseDirection);
         }
         break;
@@ -29,16 +53,18 @@ $('.cocoen-container')
       case 3:
         $(this)
           .children('.cocoen').find("img")
-          .css({'transform': 'scale('+ $(this).attr('data-scale') +')'})
+          .css({'transform': 'translateZ(0) scale('+ $(this).attr('data-scale') +')'})
           .addClass("mouseDown");
-        $(".cocoen-drag")
+        $(this).find('.cocoen-drag')
           .css('opacity', '0.6');
         if($(event.target).hasClass('cocoen-drag')){
+					target = event.target;
           document.addEventListener('mousemove', mouseDirection);
         }
         break;
       default:
     }
+		mouseDown = true;
   })
   .on('mouseup', function(e){
     $(this)
@@ -48,6 +74,7 @@ $('.cocoen-container')
     $(".cocoen-drag")
       .css('opacity', '1')
       .removeClass("dragging-left dragging-right");
+		mouseDown = false;
     document.removeEventListener("mousemove",mouseDirection);
   })
   .on('mousemove', function(e){
@@ -60,19 +87,25 @@ $('.cocoen-container')
       .children('.cocoen').find("img")
       .css({'transform': 'scale(1)'})
       .removeClass("mouseDown");
-    $(".cocoen-drag")
-      .css('opacity', '1');
-    $(".cocoen-drag")
-      .css('opacity', '1')
-      .removeClass("dragging-left dragging-right");
-    document.removeEventListener("mousemove",mouseDirection);
   });
+
+document.addEventListener('mouseup', function(e){
+	if(mouseDown) {
+		$(".cocoen-drag")
+			.css('opacity', '1')
+			.removeClass("dragging-left dragging-right");
+		mouseDown = false;
+		document.removeEventListener("mousemove",mouseDirection);
+	}
+});
 
 //Initiate Cocoen
 document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('.cocoen').forEach(function(element){
-    new Cocoen(element);
-  });
+	document.sliders = [];
+	let cocoen = document.querySelectorAll('.cocoen');
+	 for (let i = cocoen.length - 1; i > -1; i--)	{
+			  document.sliders.push (new Cocoen(cocoen[i]));
+	 }
 });
 
 /*

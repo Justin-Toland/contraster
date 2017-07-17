@@ -9,17 +9,23 @@ body {
   height: 100%;
   margin: 0px;
 }
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 .cocoen-container {
-  width: 70%;
+  width: 100%;
   overflow: hidden;
   position: relative;
-	margin: 0 auto;
 }
 .cocoen img {
   -webkit-transition: transform .3s ease-out;
   -moz-transition: transform .3s ease-out;
   -o-transition: transform .3s ease-out;
   transition: transform .3s ease-out;
+  -webkit-backface-visibility: hidden; /* Fixes the transfor scale image shifting when zoom animation ends.*/
+  backface-visibility: hidden;
 }
 .mouseDown {
   cursor: move !important;
@@ -117,7 +123,6 @@ picture .cocoen>div {
 .cocoen-drag::before {
     content: 'BEFORE';
     margin-left: -60px;
-    margin-top: -18px;
     position: absolute;
     top: 50%;
     -ms-transform: rotate(-90deg); /* IE 9 */
@@ -127,7 +132,6 @@ picture .cocoen>div {
 .cocoen-drag::after {
     content: 'AFTER';
     margin-left: -7px;
-    margin-top: -18px;
     position: absolute;
     top: 50%;s
     -ms-transform: rotate(90deg); /* IE 9 */
