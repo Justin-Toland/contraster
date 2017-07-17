@@ -1,3 +1,3 @@
 # Contraster
-A before and after slider with zoom and pan functionality using Cocoen. *Currently in early development
-![alt text](https://github.com/justintoland/contraster/images/how_to_details.svg)
+A before and after slider with zoom and pan functionality using Cocoen. <i>*Currently in early development</i>
+![](images/how_to_details.png)
