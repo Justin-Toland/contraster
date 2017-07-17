@@ -1,3 +1,14 @@
+//Initilize Cocoen
+document.addEventListener('DOMContentLoaded', function(){
+	document.sliders = [];
+	let cocoen = document.querySelectorAll('.cocoen');
+	 for (let i = cocoen.length - 1; i > -1; i--)	{
+			  document.sliders.push (new Cocoen(cocoen[i]));
+	 }
+});
+
+
+
 var mouseDown = false,
     direction = "",
 		oldx = 0,
@@ -54,6 +65,12 @@ $('.cocoen-container')
       .removeClass("dragging-left dragging-right");
 		mouseDown = false;
     document.removeEventListener("mousemove",mouseDirection);
+
+    //Disable contect menu on the element when right clicking
+    this.oncontextmenu = function () {
+      return false;
+    };
+
   })
   .on('mousemove', function(e){
     $(this)
@@ -78,14 +95,6 @@ document.addEventListener('mouseup', function(e){
 	}
 });
 
-//Initilize Cocoen
-document.addEventListener('DOMContentLoaded', function(){
-	document.sliders = [];
-	let cocoen = document.querySelectorAll('.cocoen');
-	 for (let i = cocoen.length - 1; i > -1; i--)	{
-			  document.sliders.push (new Cocoen(cocoen[i]));
-	 }
-});
 
 /*
 The MIT License (MIT)
