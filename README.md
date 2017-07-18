@@ -1,5 +1,5 @@
 # Contraster
-A before and after slider with zoom and pan functionality using Cocoen.
+A before and after slider with zoom and pan functionality using [Cocoen](https://github.com/koenoe/cocoen).
 
 ## Usage
 ![](images/how_to_details.png)
