@@ -7,33 +7,45 @@ document.addEventListener('DOMContentLoaded', function(){
 	 }
 });
 
-
-
-var mouseDown = false,
+var mouseTimeout,
+		mouseDown = false,
     direction = "",
 		oldx = 0,
 		target = null,
-		mouseDirection = function (event) {
-			if (event.pageX < oldx) {
+		mouseDirection = function (e) {
+			if (e.pageX < oldx) {
 				$(target)
 					.addClass("dragging-left")
 					.removeClass("dragging-right");
-			} else if (event.pageX > oldx) {
+			} else if (e.pageX > oldx) {
         $(target)
 					.addClass("dragging-right")
 					.removeClass("dragging-left");
 			}
-			oldx = event.pageX;
+			oldx = e.pageX;
 	  }
-
-$('.cocoen-container')
-  .on('mousedown', function(event){
-    switch (event.which) {
+document.onmousemove = function(){
+	if(!target){
+		return;
+	}
+	clearTimeout(mouseTimeout);
+	mouseTimeout = setTimeout(function(){
+		$(target)
+			.removeClass("dragging-left dragging-right");
+	}, 500);
+}
+$('.cocoen')
+//Disable contect menu on the element when right clicking
+	.on('contextmenu', function () {
+		return false;
+	})
+  .on('mousedown', function(e){
+    switch (e.which) {
       case 1:
         $(this).find('.cocoen-drag')
           .css('opacity', '0.6');
-        if($(event.target).hasClass('cocoen-drag')){
-					target = event.target;
+        if($(e.target).hasClass('cocoen-drag')){
+					target = e.target;
           document.addEventListener('mousemove', mouseDirection);
         }
         break;
@@ -41,13 +53,13 @@ $('.cocoen-container')
           break;
       case 3:
         $(this)
-          .children('.cocoen').find("img")
+          .find('img')
           .css({'transform': 'translateZ(0) scale('+ $(this).attr('data-scale') +')'})
           .addClass("mouseDown");
         $(this).find('.cocoen-drag')
           .css('opacity', '0.6');
-        if($(event.target).hasClass('cocoen-drag')){
-					target = event.target;
+        if($(e.target).hasClass('cocoen-drag')){
+					target = e.target;
           document.addEventListener('mousemove', mouseDirection);
         }
         break;
@@ -57,29 +69,26 @@ $('.cocoen-container')
   })
   .on('mouseup', function(e){
     $(this)
-      .children('.cocoen').find("img")
+      .find('img')
       .css({'transform': 'scale(1)'})
       .removeClass("mouseDown");
-    $(".cocoen-drag")
-      .css('opacity', '1')
-      .removeClass("dragging-left dragging-right");
-		mouseDown = false;
-    document.removeEventListener("mousemove",mouseDirection);
-
-    //Disable contect menu on the element when right clicking
-    this.oncontextmenu = function () {
-      return false;
-    };
+		mouseUpCommonHandler(e);
 
   })
   .on('mousemove', function(e){
     $(this)
-      .children('.cocoen').find("img")
+      .find('img')
       .css({'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 +'%'});
   })
+	.on('mouseenter', function (e) {
+		let mouse_down = e.buttons;
+		if (!mouse_down) {
+			target = null;
+		}
+	})
   .on('mouseleave', function(e){
     $(this)
-      .children('.cocoen').find("img")
+      .find('img')
       .css({'transform': 'scale(1)'})
       .removeClass("mouseDown");
   });
@@ -87,13 +96,18 @@ $('.cocoen-container')
 //Removes opacity when mouseup is outside the element
 document.addEventListener('mouseup', function(e){
 	if(mouseDown) {
-		$(".cocoen-drag")
-			.css('opacity', '1')
-			.removeClass("dragging-left dragging-right");
-		mouseDown = false;
-		document.removeEventListener("mousemove",mouseDirection);
+		mouseUpCommonHandler(e);
 	}
 });
+
+var mouseUpCommonHandler = function (e) {
+	$(".cocoen-drag")
+		.css('opacity', '1')
+		.removeClass("dragging-left dragging-right");
+	mouseDown = false;
+	target = null;
+	document.removeEventListener("mousemove",mouseDirection);
+};
 
 
 /*

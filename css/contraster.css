@@ -5,19 +5,12 @@ html {
   height: 100%;
 }
 body {
-  width: 100%;
   height: 100%;
-  margin: 0px;
 }
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-}
-.cocoen-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
 }
 .cocoen img {
   -webkit-transition: transform .3s ease-out;

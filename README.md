@@ -2,15 +2,13 @@
 A before and after slider with zoom and pan functionality using [Cocoen](https://github.com/koenoe/cocoen).
 
 ## Usage
-![](images/how_to_details.png)
+![](images/how_to_details.jpg)
 
-In the cocoen-container ```<div>```, include the ```data-scale="x"``` attribute and specify the desired zoom distance. Each attribute is uinique to the current element.  
+In the cocoen-container ```<div>```, include the ```data-scale="x"``` attribute and specify the desired zoom distance. Each attribute is uinique to the current element.
 ```html
-<div class="cocoen-container" data-scale="2">
-  <div class="cocoen">
-    <img src="image/path" alt="Before">
-    <img src="image/path" alt="After">
-  </div>
+<div class="cocoen" data-scale="2">
+  <img src="image/path" alt="Before">
+  <img src="image/path" alt="After">
 </div>
 ```
 # License
