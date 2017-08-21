@@ -11,43 +11,52 @@ var mouseTimeout,
 		mouseDown = false,
     direction = "",
 		oldx = 0,
-		target = null,
-		mouseDirection = function (e) {
-			if (e.pageX < oldx) {
-				$(target)
+		drag_handle = null,
+		handleMouseMove = function (e) {
+			slideDirection(e.pageX);
+		},
+		handleTouchMove = function (e) {
+      var touch;
+			try {
+				touch = e.changedTouches[0]
+			} catch(err) {
+				touch = e.touches[0];
+			}
+			slideDirection(touch.pageX);
+		},
+		slideDirection = function (x_value) {
+			if (x_value < oldx) {
+				$(drag_handle)
 					.addClass("dragging-left")
 					.removeClass("dragging-right");
-			} else if (e.pageX > oldx) {
-        $(target)
+			} else if (x_value > oldx) {
+        $(drag_handle)
 					.addClass("dragging-right")
 					.removeClass("dragging-left");
 			}
-			oldx = e.pageX;
+			oldx = x_value;
+			clearTimeout(mouseTimeout);
+			mouseTimeout = setTimeout(function(){
+				$(drag_handle)
+					.removeClass("dragging-left dragging-right");
+			}, 300);
 	  }
 document.onmousemove = function(){
-	if(!target){
+	if(!drag_handle){
 		return;
 	}
-	clearTimeout(mouseTimeout);
-	mouseTimeout = setTimeout(function(){
-		$(target)
-			.removeClass("dragging-left dragging-right");
-	}, 500);
 }
 $('.cocoen')
-//Disable contect menu on the element when right clicking
+//Disable context menu on the element when right clicking
 	.on('contextmenu', function () {
 		return false;
 	})
   .on('mousedown', function(e){
+		drag_handle = e.currentTarget.getElementsByClassName("cocoen-drag")[0];
     switch (e.which) {
       case 1:
-        $(this).find('.cocoen-drag')
-          .css('opacity', '0.6');
-        if($(e.target).hasClass('cocoen-drag')){
-					target = e.target;
-          document.addEventListener('mousemove', mouseDirection);
-        }
+				setSlidingMode(true);
+        document.addEventListener('mousemove', handleMouseMove);
         break;
       case 2:
           break;
@@ -56,12 +65,8 @@ $('.cocoen')
           .find('img')
           .css({'transform': 'translateZ(0) scale('+ $(this).attr('data-scale') +')'})
           .addClass("mouseDown");
-        $(this).find('.cocoen-drag')
-          .css('opacity', '0.6');
-        if($(e.target).hasClass('cocoen-drag')){
-					target = e.target;
-          document.addEventListener('mousemove', mouseDirection);
-        }
+				setSlidingMode(true);
+        document.addEventListener('mousemove', handleMouseMove);
         break;
       default:
     }
@@ -83,7 +88,7 @@ $('.cocoen')
 	.on('mouseenter', function (e) {
 		let mouse_down = e.buttons;
 		if (!mouse_down) {
-			target = null;
+			drag_handle = null;
 		}
 	})
   .on('mouseleave', function(e){
@@ -101,14 +106,52 @@ document.addEventListener('mouseup', function(e){
 });
 
 var mouseUpCommonHandler = function (e) {
-	$(".cocoen-drag")
-		.css('opacity', '1')
-		.removeClass("dragging-left dragging-right");
+	setSlidingMode(false);
 	mouseDown = false;
-	target = null;
-	document.removeEventListener("mousemove",mouseDirection);
+	document.removeEventListener("mousemove",handleMouseMove);
 };
 
+//Mobile Zoom pan
+sliderComponent = document.getElementsByClassName("cocoen");
+for(var i = 0; i < sliderComponent.length; i++){
+	sliderComponent[i].addEventListener("touchstart", tapStart);
+	sliderComponent[i].addEventListener("touchmove", handleTouchMove);
+	sliderComponent[i].addEventListener("touchend", tapEnd);
+	sliderComponent[i].addEventListener('orientationchange', doOnOrientationChange);
+}
+
+var tappedTwice = false;
+function tapStart(e) {
+	drag_handle = e.currentTarget.getElementsByClassName("cocoen-drag")[0];
+	setSlidingMode(true);
+  if(!tappedTwice) {
+      tappedTwice = true;
+      setTimeout( function() { tappedTwice = false; }, 300 );
+      return false;
+  }
+  e.preventDefault();
+  //action on double tap goes below
+	$(this)
+		.find('img')
+		.css({'transform': 'translateZ(0) scale('+ $(this).attr('data-scale') +')'})
+		.addClass("mouseDown");
+}
+
+function tapEnd() {
+	setSlidingMode(false);
+}
+
+function setSlidingMode(sliding) {
+	var dragOpacity = (sliding) ? 0.6 : 1;
+	$(drag_handle)
+		.css('opacity', dragOpacity);
+}
+
+function doOnOrientationChange() {
+	setTimeout(function() {
+		document.slider.dimensions(); //Fixes an issue with the drag not getting updated with the proper dimensions
+	}, 500);
+}
 
 /*
 The MIT License (MIT)
