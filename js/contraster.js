@@ -1,8 +1,8 @@
 //Initilize Cocoen
 document.addEventListener('DOMContentLoaded', function(){
 	document.sliders = [];
-	let cocoen = document.querySelectorAll('.cocoen');
-	 for (let i = cocoen.length - 1; i > -1; i--)	{
+	var cocoen = document.querySelectorAll('.cocoen');
+	 for (var i = cocoen.length - 1; i > -1; i--)	{
 			  document.sliders.push (new Cocoen(cocoen[i]));
 	 }
 });
@@ -56,7 +56,9 @@ $('.cocoen')
     switch (e.which) {
       case 1:
 				setSlidingMode(true);
-        document.addEventListener('mousemove', handleMouseMove);
+			  if($(e.target).hasClass('cocoen-drag')){
+	        document.addEventListener('mousemove', handleMouseMove);
+			  }
         break;
       case 2:
           break;
@@ -66,7 +68,9 @@ $('.cocoen')
           .css({'transform': 'translateZ(0) scale('+ $(this).attr('data-scale') +')'})
           .addClass("mouseDown");
 				setSlidingMode(true);
-        document.addEventListener('mousemove', handleMouseMove);
+				if($(e.target).hasClass('cocoen-drag')){
+	        document.addEventListener('mousemove', handleMouseMove);
+			  }
         break;
       default:
     }
@@ -86,7 +90,7 @@ $('.cocoen')
       .css({'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 +'%'});
   })
 	.on('mouseenter', function (e) {
-		let mouse_down = e.buttons;
+		var mouse_down = e.buttons;
 		if (!mouse_down) {
 			dragHandle = null;
 		}
