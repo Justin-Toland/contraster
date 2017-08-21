@@ -11,7 +11,7 @@ var mouseTimeout,
 		mouseDown = false,
     direction = "",
 		oldx = 0,
-		drag_handle = null,
+		dragHandle = null,
 		handleMouseMove = function (e) {
 			slideDirection(e.pageX);
 		},
@@ -26,23 +26,23 @@ var mouseTimeout,
 		},
 		slideDirection = function (x_value) {
 			if (x_value < oldx) {
-				$(drag_handle)
+				$(dragHandle)
 					.addClass("dragging-left")
 					.removeClass("dragging-right");
 			} else if (x_value > oldx) {
-        $(drag_handle)
+        $(dragHandle)
 					.addClass("dragging-right")
 					.removeClass("dragging-left");
 			}
 			oldx = x_value;
 			clearTimeout(mouseTimeout);
 			mouseTimeout = setTimeout(function(){
-				$(drag_handle)
+				$(dragHandle)
 					.removeClass("dragging-left dragging-right");
 			}, 300);
 	  }
 document.onmousemove = function(){
-	if(!drag_handle){
+	if(!dragHandle){
 		return;
 	}
 }
@@ -52,7 +52,7 @@ $('.cocoen')
 		return false;
 	})
   .on('mousedown', function(e){
-		drag_handle = e.currentTarget.getElementsByClassName("cocoen-drag")[0];
+		dragHandle = e.currentTarget.getElementsByClassName("cocoen-drag")[0];
     switch (e.which) {
       case 1:
 				setSlidingMode(true);
@@ -88,7 +88,7 @@ $('.cocoen')
 	.on('mouseenter', function (e) {
 		let mouse_down = e.buttons;
 		if (!mouse_down) {
-			drag_handle = null;
+			dragHandle = null;
 		}
 	})
   .on('mouseleave', function(e){
@@ -122,7 +122,7 @@ for(var i = 0; i < sliderComponent.length; i++){
 
 var tappedTwice = false;
 function tapStart(e) {
-	drag_handle = e.currentTarget.getElementsByClassName("cocoen-drag")[0];
+	dragHandle = e.currentTarget.getElementsByClassName("cocoen-drag")[0];
 	setSlidingMode(true);
   if(!tappedTwice) {
       tappedTwice = true;
@@ -143,7 +143,7 @@ function tapEnd() {
 
 function setSlidingMode(sliding) {
 	var dragOpacity = (sliding) ? 0.6 : 1;
-	$(drag_handle)
+	$(dragHandle)
 		.css('opacity', dragOpacity);
 }
 
