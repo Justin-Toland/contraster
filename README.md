@@ -11,5 +11,8 @@ In the cocoen-container ```<div>```, include the ```data-scale="x"``` attribute 
   <img src="image/path" alt="After">
 </div>
 ```
+## Mobile Controls
+TAP and DRAG slider bar to compare.  DOUBLE TAP and DRAG to zoom and pan image.
+
 # License
 The code and the documentation are released under the [MIT License](LICENSE).
