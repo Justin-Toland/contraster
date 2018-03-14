@@ -153,7 +153,7 @@ function setSlidingMode(sliding) {
 
 function doOnOrientationChange() {
 	setTimeout(function() {
-		document.slider.dimensions(); //Fixes an issue with the drag not getting updated with the proper dimensions
+		document.slider.dimensions(); //Bandaid solution to fix an issue with the drag not getting updated with the proper dimensions
 	}, 500);
 }
 
