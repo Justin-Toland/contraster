@@ -1,10 +1,35 @@
+var $cocoen = $('.cocoen');
+
 //Initilize Cocoen
 document.addEventListener('DOMContentLoaded', function(){
+	//Check Cocoen intro animation Settings
+	if($cocoen.data('animate')) {
+		if($cocoen.data('animation') == 'half') {
+			$cocoen.addClass('animate-slider');
+		} else {
+			$cocoen.css('height', '0px');
+			$cocoen.addClass('animate-slider');
+		}
+	}
 	document.sliders = [];
 	var cocoen = document.querySelectorAll('.cocoen');
-	 for (var i = cocoen.length - 1; i > -1; i--)	{
-			  document.sliders.push (new Cocoen(cocoen[i]));
-	 }
+		for (var i = cocoen.length - 1; i > -1; i--)	{
+				document.sliders.push (new Cocoen(cocoen[i]));
+		}
+		//Cocoen animation function.
+	 	if($cocoen.data('animate')) {
+			var cocoenHeight = $('.cocoen img').height();
+			function playAnimation() {
+				$cocoen.css('height', cocoenHeight);
+				setTimeout(function(){ //Remove set height used for intro animtation for responsiveness.
+					$cocoen.removeAttr('style');
+					if($cocoen.data('animate-repeat') == false) { //Prevent animation from playing more than once if you are re-initializing the slider dynamically
+						$cocoen.data('animate', false);
+					}
+				},500);
+			}
+	 		playAnimation();
+	 	}
 });
 
 var mouseTimeout,
@@ -24,17 +49,17 @@ var mouseTimeout,
 			}
 			slideDirection(touch.pageX);
 		},
-		slideDirection = function (x_value) {
-			if (x_value < oldx) {
+		slideDirection = function (xValue) {
+			if (xValue < oldx) {
 				$(dragHandle)
 					.addClass("dragging-left")
 					.removeClass("dragging-right");
-			} else if (x_value > oldx) {
+			} else if (xValue > oldx) {
         $(dragHandle)
 					.addClass("dragging-right")
 					.removeClass("dragging-left");
 			}
-			oldx = x_value;
+			oldx = xValue;
 			clearTimeout(mouseTimeout);
 			mouseTimeout = setTimeout(function(){
 				$(dragHandle)
@@ -46,8 +71,9 @@ document.onmousemove = function(){
 		return;
 	}
 }
-$('.cocoen')
-//Disable context menu on the element when right clicking
+
+$cocoen
+	//Disable context menu on the element when right clicking
 	.on('contextmenu', function () {
 		return false;
 	})
@@ -153,9 +179,10 @@ function setSlidingMode(sliding) {
 
 function doOnOrientationChange() {
 	setTimeout(function() {
-		document.slider.dimensions(); //Bandaid solution to fix an issue with the drag not getting updated with the proper dimensions
+		document.slider.dimensions(); //Band-Aid solution to fix an issue with the drag not getting updated with the proper dimensions
 	}, 500);
 }
+
 
 /*
 The MIT License (MIT)

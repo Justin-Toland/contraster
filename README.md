@@ -1,5 +1,5 @@
 # Contraster
-A before and after slider with zoom and pan functionality using [Cocoen](https://github.com/koenoe/cocoen).
+A before and after slider with zoom and pan functionality using [Cocoen](https://github.com/koenoe/cocoen){:target="_blank"}.
 
 ## Usage
 ![](images/how_to_details.jpg)
@@ -11,6 +11,8 @@ In the cocoen-container ```<div>```, include the ```data-scale="x"``` attribute 
   <img src="image/path" alt="After">
 </div>
 ```
+[Demo](https://justin-toland.github.io/contraster/){:target="_blank"}
+
 ## Mobile Controls
 TAP and DRAG slider bar to compare.  DOUBLE TAP and DRAG to zoom and pan image.
 

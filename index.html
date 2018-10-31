@@ -4,12 +4,24 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Before/After Image Slider with Zoom and Pan functionality.</title>
-	<link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
 	<link rel="stylesheet" href="css/contraster.css">
+	<style media="screen">
+		html {
+			height: 100%;
+		}
+		body {
+			height: 100%;
+		}
+		.container {
+			width: 100%;
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+	</style>
 </head>
 <body>
 	<div class="container">
-			<div class="cocoen" data-scale="2">
+			<div class="cocoen" data-scale="2" data-animate=true data-animate-repeat=false>
 			  <img src="images/placeholder.jpg" alt="Before">
 				<img src="images/placeholder_BW.jpg" alt="After">
 			</div>

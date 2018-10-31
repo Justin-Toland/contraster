@@ -1,32 +1,3 @@
-/* Custom Styles */
-@import url('https://fonts.googleapis.com/css?family=Oswald');
-
-html {
-  height: 100%;
-}
-body {
-  height: 100%;
-}
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.cocoen img {
-  -webkit-transition: transform .3s ease-out;
-  -moz-transition: transform .3s ease-out;
-  -o-transition: transform .3s ease-out;
-  transition: transform .3s ease-out;
-  -webkit-backface-visibility: hidden; /* Fixes the transfor scale image shifting when zoom animation ends.*/
-  backface-visibility: hidden;
-}
-.mouseDown {
-  cursor: move !important;
-}
-.cocoen-drag.dragging-left::before, .cocoen-drag.dragging-right::after {
-  opacity: 0;
-}
-
 /*
 The MIT License (MIT)
 Copyright (c) 2015 Koen Romers
@@ -49,87 +20,115 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
+
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+
+.cocoen img {
+  -webkit-transition: transform .3s ease-out;
+  -moz-transition: transform .3s ease-out;
+  -o-transition: transform .3s ease-out;
+  transition: transform .3s ease-out;
+  /* -webkit-backface-visibility: hidden;  // Fixes the transform scale image shifting when zoom animation ends. *Commented out due to issues in windows 10 IE11 going black durning zoom transition.
+  backface-visibility: hidden; */
+}
+
+.mouseDown {
+  cursor: move !important;
+}
+
+.cocoen-drag.dragging-left::before, .cocoen-drag.dragging-right::after {
+  opacity: 0;
+}
+
 .cocoen {
-    font-family: 'Oswald', sans-serif;
-    box-sizing: border-box;
-    cursor: pointer;
-    line-height: 0;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-    position: relative;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  font-family: 'Oswald', sans-serif;
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  height: auto;
+  -webkit-transition: height 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition: height 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .cocoen * {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 .cocoen::after,
 .cocoen::before {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 .cocoen img,
 .cocoen picture>img {
-    max-width: none;
+  max-width: none;
 }
 
 .cocoen>img,
 .cocoen>picture>img {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 
 .cocoen>div:first-child,
 picture .cocoen>div {
-    height: 100%;
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    width: 50%;
-    z-index: 2;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 50%;
+  z-index: 2;
 }
 
 .cocoen-drag {
-    background: #fff;
-    color: #fff;
-    bottom: 0;
-    font-size: 1.8em;
-    cursor: ew-resize;
-    left: 50%;
-    margin-left: -1px;
-    position: absolute;
-    top: 0;
-    width: 5px;
-    z-index: 3;
-    -webkit-transition: opacity .2s ease-out;
-    -moz-transition: opacity .2s ease-out;
-    -o-transition: opacity .2s ease-out;
-    transition: opacity .2s ease-out;
+  background: #fff;
+  color: #fff;
+  bottom: 0;
+  font-size: 1.8em;
+  cursor: ew-resize;
+  left: 50%;
+  margin-left: -1px;
+  position: absolute;
+  top: 0;
+  width: 5px;
+  z-index: 3;
+  -webkit-transition: opacity .2s ease-out;
+  -moz-transition: opacity .2s ease-out;
+  -o-transition: opacity .2s ease-out;
+  transition: opacity .2s ease-out;
 }
 
 .cocoen-drag::before {
-    content: 'BEFORE';
-    margin-left: -60px;
-    position: absolute;
-    top: 50%;
-    -ms-transform: rotate(-90deg); /* IE 9 */
-    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
-    transform: rotate(-90deg);
+  content: 'BEFORE';
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  line-height: 1em;
 }
+
 .cocoen-drag::after {
-    content: 'AFTER';
-    margin-left: -7px;
-    position: absolute;
-    top: 50%;s
-    -ms-transform: rotate(90deg); /* IE 9 */
-    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
-    transform: rotate(90deg);
+  content: 'AFTER';
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+  line-height: 1em;
 }
 
 .cocoen-drag::before, .cocoen-drag::after {
@@ -137,4 +136,105 @@ picture .cocoen>div {
   -moz-transition: opacity .2s ease-out;
   -o-transition: opacity .2s ease-out;
   transition: opacity .2s ease-out;
+}
+
+/* CSS Drag Intro Animations */
+.animate-slider .cocoen-drag {
+  animation: drag-left 1.5s ease;
+  animation-delay: .7s;
+}
+
+.animate-slider > div:first-child {
+  animation: drag-width 1.5s ease;
+  animation-delay: .7s;
+}
+
+@-moz-keyframes drag-left {
+  0% {
+    left: 50%;
+  }
+  25% {
+    left: 85%;
+  }
+  50% {
+    left: 15%;
+  }
+  100% {
+    left: 50%;
+  }
+}
+
+@-webkit-keyframes drag-left {
+  0% {
+    left: 50%;
+  }
+  25% {
+    left: 85%;
+  }
+  50% {
+    left: 15%;
+  }
+  100% {
+    left: 50%;
+  }
+}
+
+@keyframes drag-left {
+  0% {
+    left: 50%;
+  }
+  33% {
+    left: 85%;
+  }
+  66% {
+    left: 15%;
+  }
+  100% {
+    left: 50%;
+  }
+}
+
+@-moz-keyframes drag-width {
+  0% {
+    width: 50%;
+  }
+  33% {
+    width: 85%;
+  }
+  66% {
+    width: 15%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
+@-webkit-keyframes drag-width {
+  0% {
+    width: 50%;
+  }
+  33% {
+    width: 85%;
+  }
+  66% {
+    width: 15%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
+@keyframes drag-width {
+  0% {
+    width: 50%;
+  }
+  33% {
+    width: 85%;
+  }
+  66% {
+    width: 15%;
+  }
+  100% {
+    width: 50%;
+  }
 }
